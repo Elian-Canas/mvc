@@ -11,13 +11,10 @@ class HomeController extends Controller
 
         $contactModel = new Contact();
 
-        return $contactModel->update(6, [
-            'name' => 'Hugo Otavo',
-            'email' => 'Hugo@gmail.com',
-            'phone' => '3121131687'
-        ]);
+        $contactModel->delete(7);
 
 
+        return "Eliminado";
 
         return $this->view('home', [
             'title' => 'Home',
