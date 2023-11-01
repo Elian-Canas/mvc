@@ -11,6 +11,14 @@ class HomeController extends Controller
 
         $contactModel = new Contact();
 
+        return $contactModel->create([
+            'name' => 'Milton Otavo',
+            'email' => 'milton@gmail.com',
+            'phone' => '3121131121'
+        ]);
+
+
+
         return $this->view('home', [
             'title' => 'Home',
             'description' => 'Esta es la página home'
