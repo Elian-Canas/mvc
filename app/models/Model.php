@@ -84,4 +84,20 @@ class Model
 
         return $this->find($insert_id);
     }
+
+    public function update($id, $data) {
+        //UPDATE contacts SET name = '', email = '', phone = '' WHERE id = 1
+
+        foreach ($data as $key => $value) {
+           $fields[] = "{$key} = '{$value}'";
+        }
+
+        $fields = implode(', ', $fields);
+    
+        $sql = "UPDATE {$this->table} SET {$fields} WHERE id = {$id}";
+        
+        $this->query($sql);
+
+        return $this->find($id);
+    }
 }

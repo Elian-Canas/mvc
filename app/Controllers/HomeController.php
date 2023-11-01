@@ -11,10 +11,10 @@ class HomeController extends Controller
 
         $contactModel = new Contact();
 
-        return $contactModel->create([
-            'name' => 'Milton Otavo',
-            'email' => 'milton@gmail.com',
-            'phone' => '3121131121'
+        return $contactModel->update(6, [
+            'name' => 'Hugo Otavo',
+            'email' => 'Hugo@gmail.com',
+            'phone' => '3121131687'
         ]);
 
 
