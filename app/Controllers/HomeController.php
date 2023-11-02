@@ -11,14 +11,14 @@ class HomeController extends Controller
 
         $contactModel = new Contact();
 
-        $contactModel->delete(7);
+        return $contactModel->where("name", "Luz Barragan' OR 'a' = 'a")->get();
 
 
-        return "Eliminado";
+        
 
-        return $this->view('home', [
-            'title' => 'Home',
-            'description' => 'Esta es la página home'
-        ]);
+        // return $this->view('home', [
+        //     'title' => 'Home',
+        //     'description' => 'Esta es la página home'
+        // ]);
     }
 }

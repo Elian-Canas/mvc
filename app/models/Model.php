@@ -63,9 +63,14 @@ class Model
             
         }
 
+        $value = $this->connection->real_escape_string($value);
+
         //SELECT * FROM contacts WHERE name = "Juan"
         $sql= "SELECT * FROM {$this->table} WHERE {$column} {$operator} '{$value}'";
-        return $this->query($sql)->get();
+
+         $this->query($sql);
+
+         return $this;
     }
 
     public function create($data){
