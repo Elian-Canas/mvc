@@ -11,14 +11,18 @@ class HomeController extends Controller
 
         $contactModel = new Contact();
 
-        return $contactModel->where("name", "Luz Barragan' OR 'a' = 'a")->get();
+        return $contactModel->update(8, [
+            'name' => 'Andres',
+            'email' => 'andres@gmail.com',
+            'phone' => '319863623'
+        ]);
 
 
         
 
-        // return $this->view('home', [
-        //     'title' => 'Home',
-        //     'description' => 'Esta es la página home'
-        // ]);
+        return $this->view('home', [
+            'title' => 'Home',
+            'description' => 'Esta es la página home'
+        ]);
     }
 }
