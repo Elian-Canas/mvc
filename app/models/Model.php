@@ -84,6 +84,8 @@ class Model
             'total' => $total, 
             'from' => ($page - 1) * $cant + 1, //1
             'to' => ($page -1) * $cant + count($data), //3
+            'current_page' => $page,
+            'last_page' => $last_page,
             'next_page_url' => $page < $last_page ? '/' . $uri . '?page=' . $page + 1 : null,
             'prev_page_url' => $page > 1 ? '/' . $uri . '?page=' . $page - 1 : null,
             'data'=> $data
