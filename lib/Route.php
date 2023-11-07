@@ -9,7 +9,7 @@ class Route
     public static function get($uri, $callback)
     {
 
-       $uri = trim($uri, "/");
+        $uri = trim($uri, "/");
         self::$routes['GET'][$uri] = $callback;
     }
 
@@ -24,13 +24,16 @@ class Route
         $uri = $_SERVER['REQUEST_URI'];
         $uri = trim($uri, '/');
 
+        if (strpos($uri, '?')) {
+            $uri = substr($uri, 0, strpos($uri, '?'));
+        }
+
         $method = $_SERVER['REQUEST_METHOD'];
-        
-        foreach (self::$routes[$method] as $route => $callback){
+
+        foreach (self::$routes[$method] as $route => $callback) {
 
             if (strpos($route, ':') !== false) {
                 $route = preg_replace('#:[a-zA-Z]+#', '([a-zA-Z0-9]+)', $route);
-                
             }
 
 
@@ -41,11 +44,11 @@ class Route
 
                 // $response = $callback(...$params);
 
-                if(is_callable($callback)){
+                if (is_callable($callback)) {
                     $response = $callback(...$params);
                 }
 
-                if(is_array($callback)){
+                if (is_array($callback)) {
                     $controller = new $callback[0];
 
                     $response = $controller->{$callback[1]}(...$params);

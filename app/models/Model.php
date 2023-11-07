@@ -20,7 +20,7 @@ class Model
 
     public function connection()
     {
-        $this->connection = new mysqli($this->db_host, $this->db_user, $this->db_pass, $this->db_name, );
+        $this->connection = new mysqli($this->db_host, $this->db_user, $this->db_pass, $this->db_name,);
 
 
         if ($this->connection->connect_error) {
@@ -34,7 +34,8 @@ class Model
         if ($data) {
 
             if (
-                $params == null) {
+                $params == null
+            ) {
                 $params = str_repeat('s', count($data));
             }
             $stmt = $this->connection->prepare($sql);
@@ -47,7 +48,6 @@ class Model
         }
 
         return $this;
-    
     }
 
     public function first()
@@ -58,6 +58,37 @@ class Model
     public function get()
     {
         return $this->query->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function paginate($cant = 15)
+    {
+
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM {$this->table} LIMIT " . ($page - 1) * $cant . ",{$cant}";
+
+        $data = $this->query($sql)->get();
+
+        $total = $this->query('SELECT FOUND_ROWS() AS TOTAL')->first()['TOTAL'];
+
+        $uri = $_SERVER['REQUEST_URI'];
+        $uri = trim($uri, '/');
+
+        if (strpos($uri, '?')) {
+            $uri = substr($uri, 0, strpos($uri, '?'));
+        }
+
+        $last_page = ceil($total / $cant);
+
+        return [
+            'total' => $total, 
+            'from' => ($page - 1) * $cant + 1, //1
+            'to' => ($page -1) * $cant + count($data), //3
+            'next_page_url' => $page < $last_page ? '/' . $uri . '?page=' . $page + 1 : null,
+            'prev_page_url' => $page > 1 ? '/' . $uri . '?page=' . $page - 1 : null,
+            'data'=> $data
+
+        ];
     }
 
     //consultas
@@ -124,7 +155,7 @@ class Model
 
         $sql = "UPDATE {$this->table} SET {$fields} WHERE id = ?";
 
-        
+
 
         $values = array_values($data);
         $values[] = $id;
